@@ -1,3 +1,5 @@
+( JAWABAN NO 1 )
+
 #include <iostream>
 #include <string>
 using namespace std;
@@ -122,6 +124,300 @@ int main() {
                 break;
         }
     } while (pilihan != 4);
+
+    return 0;
+}
+
+
+(SELESAI
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+( JAWABAN NO 2 )
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Struktur data Buku
+struct Buku {
+    int id;
+    string judul;
+    string penulis;
+    int tahunTerbit;
+};
+
+// Struktur data untuk menyimpan daftar buku
+struct DaftarBuku {
+    Buku buku[15];
+    int jumlahBuku;
+
+    // Fungsi untuk menampilkan daftar buku
+    void tampilkanBuku() {
+        cout << "\nDaftar Buku:\n";
+        for (int i = 0; i < jumlahBuku; i++) {
+            cout << "ID: " << buku[i].id << ", Judul: " << buku[i].judul
+                 << ", Penulis: " << buku[i].penulis
+                 << ", Tahun Terbit: " << buku[i].tahunTerbit << endl;
+        }
+    }
+
+    // Fungsi Quick Sort untuk mengurutkan buku berdasarkan judul
+    int partition(int low, int high) {
+        Buku pivot = buku[high];
+        int i = low - 1;
+        for (int j = low; j < high; j++) {
+            if (buku[j].judul < pivot.judul) {
+                i++;
+                Buku temp = buku[i];
+                buku[i] = buku[j];
+                buku[j] = temp;
+            }
+        }
+        Buku temp = buku[i + 1];
+        buku[i + 1] = buku[high];
+        buku[high] = temp;
+        return i + 1;
+    }
+
+    void quickSort(int low, int high) {
+        if (low < high) {
+            int pi = partition(low, high);
+            quickSort(low, pi - 1);
+            quickSort(pi + 1, high);
+        }
+    }
+
+    // Fungsi Linear Search untuk mencari buku berdasarkan ID
+    void cariBuku(int idCari) {
+        bool ditemukan = false;
+        for (int i = 0; i < jumlahBuku; i++) {
+            if (buku[i].id == idCari) {
+                cout << "\nBuku ditemukan:\n";
+                cout << "ID: " << buku[i].id << ", Judul: " << buku[i].judul
+                     << ", Penulis: " << buku[i].penulis
+                     << ", Tahun Terbit: " << buku[i].tahunTerbit << endl;
+                ditemukan = true;
+                break;
+            }
+        }
+        if (!ditemukan) {
+            cout << "\nBuku dengan ID " << idCari << " tidak ditemukan.\n";
+        }
+    }
+};
+
+int main() {
+    DaftarBuku daftarBuku = {
+        {
+            {20101, "Perempuan yang Menghirup Rindu", "Salsabila Kartika", 2024},
+            {20102, "Sebuah Usaha Melupakan", "Boy Candra", 2024},
+            {20103, "Matahari dan Bulan", "Nadira Hadi", 2024},
+            {20104, "Diantara Waktu", "Alvi Syahrin", 2024},
+            {20105, "Senandika Rindu", "Fiersa Besari", 2024},
+            {20106, "Hujan di Musim Kemarau", "Pidi Baiq", 2024},
+            {20107, "Kisah Tanah Jawa", "Bonaventura Genta", 2024},
+            {20108, "Langit Merah", "Ahmad Fuadi", 2024},
+            {20109, "Pulang", "Tere Liye", 2024},
+            {201010, "Surat Cinta untuk Starla", "Virgoun", 2024},
+            {201011, "Melangkah dalam Sepi", "Prilly Latuconsina", 2024},
+            {201012, "Biru Langit yang Indah", "Ayu Utami", 2024},
+            {201013, "Senja Bersama Cinta", "Rintik Sedu", 2024},
+            {201014, "Negeri 5 Menara", "Ahmad Fuadi", 2024},
+            {201015, "Orang-orang Biasa", "Andrea Hirata", 2024}
+        },
+        15
+    };
+
+    int pilihan;
+    do {
+        cout << "\nMenu:\n";
+        cout << "1. Tampilkan daftar buku\n";
+        cout << "2. Urutkan buku berdasarkan judul\n";
+        cout << "3. Cari buku berdasarkan ID\n";
+        cout << "4. Keluar\n";
+        cout << "Pilih opsi: ";
+        cin >> pilihan;
+
+        switch (pilihan) {
+            case 1:
+                daftarBuku.tampilkanBuku();
+                break;
+            case 2:
+                cout << "\nDaftar buku sebelum diurutkan:\n";
+                daftarBuku.tampilkanBuku();
+
+                daftarBuku.quickSort(0, daftarBuku.jumlahBuku - 1);
+
+                cout << "\nDaftar buku setelah diurutkan:\n";
+                daftarBuku.tampilkanBuku();
+                break;
+            case 3: {
+                int idCari;
+                cout << "Masukkan ID buku yang ingin dicari: ";
+                cin >> idCari;
+                daftarBuku.cariBuku(idCari);
+                break;
+            }
+            case 4:
+                cout << "Keluar dari program.\n";
+                break;
+            default:
+                cout << "Pilihan tidak valid.\n";
+                break;
+        }
+    } while (pilihan != 4);
+
+    return 0;
+}
+
+( SELESAI )
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+(JAWABAN NO 3)
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Struktur data Buku
+struct Buku {
+    int id;
+    string judul;
+    string penulis;
+    int tahunTerbit;
+};
+
+// Struktur data untuk menyimpan daftar buku
+struct DaftarBuku {
+    Buku* buku;  // Menggunakan pointer untuk alokasi dinamis
+    int jumlahBuku;
+
+    // Konstruktor untuk alokasi dinamis
+    DaftarBuku(int jumlah) : jumlahBuku(jumlah) {
+        buku = new Buku[jumlah];  // Alokasi memori untuk buku
+    }
+
+    // Destructor untuk membersihkan memori
+    ~DaftarBuku() {
+        delete[] buku;  // Membebaskan memori setelah selesai
+    }
+
+    // Fungsi untuk menampilkan daftar buku
+    void tampilkanBuku() {
+        cout << "\nDaftar Buku:\n";
+        for (int i = 0; i < jumlahBuku; i++) {
+            cout << "ID: " << buku[i].id << ", Judul: " << buku[i].judul
+                 << ", Penulis: " << buku[i].penulis
+                 << ", Tahun Terbit: " << buku[i].tahunTerbit << endl;
+        }
+    }
+
+    // Fungsi Quick Sort untuk mengurutkan buku berdasarkan judul
+    int partition(int low, int high) {
+        Buku pivot = buku[high];
+        int i = low - 1;
+        for (int j = low; j < high; j++) {
+            if (buku[j].judul < pivot.judul) {
+                i++;
+                Buku temp = buku[i];
+                buku[i] = buku[j];
+                buku[j] = temp;
+            }
+        }
+        Buku temp = buku[i + 1];
+        buku[i + 1] = buku[high];
+        buku[high] = temp;
+        return i + 1;
+    }
+
+    void quickSort(int low, int high) {
+        if (low < high) {
+            int pi = partition(low, high);
+            quickSort(low, pi - 1);
+            quickSort(pi + 1, high);
+        }
+    }
+
+    // Fungsi Linear Search untuk mencari buku berdasarkan ID
+    void cariBuku(int idCari) {
+        bool ditemukan = false;
+        for (int i = 0; i < jumlahBuku; i++) {
+            if (buku[i].id == idCari) {
+                cout << "\nBuku ditemukan:\n";
+                cout << "ID: " << buku[i].id << ", Judul: " << buku[i].judul
+                     << ", Penulis: " << buku[i].penulis
+                     << ", Tahun Terbit: " << buku[i].tahunTerbit << endl;
+                ditemukan = true;
+                break;
+            }
+        }
+        if (!ditemukan) {
+            cout << "\nBuku dengan ID " << idCari << " tidak ditemukan.\n";
+        }
+    }
+};
+
+int main() {
+    // Membuat objek DaftarBuku dengan alokasi dinamis
+    DaftarBuku* daftarBuku = new DaftarBuku(15);
+    
+    // Inisialisasi data buku
+    daftarBuku->buku[0] = {20101, "Perempuan yang Menghirup Rindu", "Salsabila Kartika", 2024};
+    daftarBuku->buku[1] = {20102, "Sebuah Usaha Melupakan", "Boy Candra", 2024};
+    daftarBuku->buku[2] = {20103, "Matahari dan Bulan", "Nadira Hadi", 2024};
+    daftarBuku->buku[3] = {20104, "Diantara Waktu", "Alvi Syahrin", 2024};
+    daftarBuku->buku[4] = {20105, "Senandika Rindu", "Fiersa Besari", 2024};
+    daftarBuku->buku[5] = {20106, "Hujan di Musim Kemarau", "Pidi Baiq", 2024};
+    daftarBuku->buku[6] = {20107, "Kisah Tanah Jawa", "Bonaventura Genta", 2024};
+    daftarBuku->buku[7] = {20108, "Langit Merah", "Ahmad Fuadi", 2024};
+    daftarBuku->buku[8] = {20109, "Pulang", "Tere Liye", 2024};
+    daftarBuku->buku[9] = {201010, "Surat Cinta untuk Starla", "Virgoun", 2024};
+    daftarBuku->buku[10] = {201011, "Melangkah dalam Sepi", "Prilly Latuconsina", 2024};
+    daftarBuku->buku[11] = {201012, "Biru Langit yang Indah", "Ayu Utami", 2024};
+    daftarBuku->buku[12] = {201013, "Senja Bersama Cinta", "Rintik Sedu", 2024};
+    daftarBuku->buku[13] = {201014, "Negeri 5 Menara", "Ahmad Fuadi", 2024};
+    daftarBuku->buku[14] = {201015, "Orang-orang Biasa", "Andrea Hirata", 2024};
+
+    int pilihan;
+    do {
+        cout << "\nMenu:\n";
+        cout << "1. Tampilkan daftar buku\n";
+        cout << "2. Urutkan buku berdasarkan judul\n";
+        cout << "3. Cari buku berdasarkan ID\n";
+        cout << "4. Keluar\n";
+        cout << "Pilih opsi: ";
+        cin >> pilihan;
+
+        switch (pilihan) {
+            case 1:
+                daftarBuku->tampilkanBuku();
+                break;
+            case 2:
+                cout << "\nDaftar buku sebelum diurutkan:\n";
+                daftarBuku->tampilkanBuku();
+
+                daftarBuku->quickSort(0, daftarBuku->jumlahBuku - 1);
+
+                cout << "\nDaftar buku setelah diurutkan:\n";
+                daftarBuku->tampilkanBuku();
+                break;
+            case 3: {
+                int idCari;
+                cout << "Masukkan ID buku yang ingin dicari: ";
+                cin >> idCari;
+                daftarBuku->cariBuku(idCari);
+                break;
+            }
+            case 4:
+                cout << "Keluar dari program.\n";
+                break;
+            default:
+                cout << "Pilihan tidak valid.\n";
+                break;
+        }
+    } while (pilihan != 4);
+
+    // Membebaskan memori setelah selesai
+    delete daftarBuku;
 
     return 0;
 }
